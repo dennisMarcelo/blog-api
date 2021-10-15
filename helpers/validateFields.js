@@ -35,12 +35,11 @@ const newCategory = (category) => {
 };
 
 const newPost = (post) => {
+  console.log(post);
   const { error } = Joi.object({
     title: Joi.string().not().empty().required(),
     content: Joi.string().not().empty().required(),
-    categoryIds: Joi.array().items(
-      Joi.number().required(),
-    ).not().empty().required,
+    categoryIds: Joi.array().items(Joi.number().required()),
   }).validate(post);
   
   if (error) throw new CustomError(error.message, 400);
