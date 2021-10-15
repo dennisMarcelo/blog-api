@@ -3,6 +3,7 @@ const express = require('express');
 
 const app = express();
 const userController = require('./controllers/userController');
+const loginController = require('./controllers/loginController');
 const errorMiddleware = require('./middlewares/error');
 
 app.use(express.json());
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userController);
+app.use('/login', loginController);
 
 app.use(errorMiddleware);
 
