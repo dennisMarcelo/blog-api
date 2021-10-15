@@ -34,8 +34,21 @@ const newCategory = (category) => {
   if (error) throw new CustomError(error.message, 400);
 };
 
+const newPost = (post) => {
+  const { error } = Joi.object({
+    title: Joi.string().not().empty().required(),
+    content: Joi.string().not().empty().required(),
+    categoryIds: Joi.array().items(
+      Joi.number().required(),
+    ).not().empty().required,
+  }).validate(post);
+  
+  if (error) throw new CustomError(error.message, 400);
+};
+
 module.exports = {
   newUser,
   loginUser,
   newCategory,
+  newPost,
 };
