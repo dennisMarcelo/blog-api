@@ -21,4 +21,11 @@ router.get('/', validateJWT, rescue(async (req, res) => {
   res.status(200).json(users);
 }));
 
+router.get('/:id', validateJWT, rescue(async (req, res) => {
+  const { id } = req.params;
+  const user = await userService.getById(id);
+
+  res.status(200).json(user);
+}));
+
 module.exports = router;
