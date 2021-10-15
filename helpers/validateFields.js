@@ -26,7 +26,16 @@ const loginUser = (user) => {
   if (error) throw new CustomError(error.message, 400);
 };
 
+const newCategory = (category) => {
+  const { error } = Joi.object({
+    name: Joi.string().not().empty().required(),
+  }).validate(category);
+  
+  if (error) throw new CustomError(error.message, 400);
+};
+
 module.exports = {
   newUser,
   loginUser,
+  newCategory,
 };
