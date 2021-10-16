@@ -39,4 +39,12 @@ router.put('/:id', validateJWT, rescue(async (req, res) => {
   res.status(200).json(postUpdated);
 }));
 
+router.delete('/:id', validateJWT, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const postDeleted = await postService.remove(id, req.user);
+
+  res.status(204).json(postDeleted);
+}));
+
 module.exports = router;
