@@ -15,4 +15,12 @@ router.post('/', validateJWT, rescue(async (req, res) => {
   res.status(201).json(postCreated);
 }));
 
+router.get('/:id', validateJWT, rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await postService.findById(id);
+
+  res.status(200).json(post);
+}));
+
 module.exports = router;
