@@ -92,7 +92,7 @@ const remove = async (id, user) => {
 
 const search = async (query) => {
   console.log(query);
-
+  // consultei: https://stackoverflow.com/questions/20695062/sequelize-or-condition-object/32543638
   const posts = await BlogPost.findAll({ 
     where: Sequelize.or({ title: query }, { content: query }),
     include: [
@@ -112,6 +112,3 @@ module.exports = {
   remove,
   search,
 };
-
-// Sequelize.or({ title: query }, { content: query })
-// { $or: [{ title: { $eq: query } }, { title: { $eq: query } }] }
