@@ -15,6 +15,12 @@ router.post('/', validateJWT, rescue(async (req, res) => {
   res.status(201).json(postCreated);
 }));
 
+router.get('/', validateJWT, rescue(async (req, res) => {
+  const posts = await postService.findAll();
+
+  res.status(200).json(posts);
+}));
+
 router.get('/:id', validateJWT, rescue(async (req, res) => {
   const { id } = req.params;
 
