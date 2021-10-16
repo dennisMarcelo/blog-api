@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 const CustomError = require('../helpers/CustomError');
 
 const { BlogPost, PostsCategorie, User, Categorie } = require('../models');
@@ -89,10 +90,28 @@ const remove = async (id, user) => {
   return postDeleted;
 };
 
+const search = async (query) => {
+  console.log(query);
+
+  const posts = await BlogPost.findAll({ 
+    where: Sequelize.or({ title: query }, { content: query }),
+    include: [
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+    ],
+   });
+
+  return posts;
+};
+
 module.exports = {
   create,
   findById,
   findAll,
   update,
   remove,
+  search,
 };
+
+// Sequelize.or({ title: query }, { content: query })
+// { $or: [{ title: { $eq: query } }, { title: { $eq: query } }] }

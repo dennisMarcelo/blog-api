@@ -21,6 +21,19 @@ router.get('/', validateJWT, rescue(async (req, res) => {
   res.status(200).json(posts);
 }));
 
+router.get('/search', validateJWT, rescue(async (req, res) => {
+  const { q } = req.query;
+
+  let posts = {};
+  if (!q || q.length === 0) {
+    posts = await postService.findAll();
+  } else {
+    posts = await postService.search(q);
+  }
+
+  res.status(200).json(posts);
+}));
+
 router.get('/:id', validateJWT, rescue(async (req, res) => {
   const { id } = req.params;
 
