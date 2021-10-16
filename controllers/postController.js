@@ -29,4 +29,14 @@ router.get('/:id', validateJWT, rescue(async (req, res) => {
   res.status(200).json(post);
 }));
 
+router.put('/:id', validateJWT, rescue(async (req, res) => {
+  isValid.updatePost(req.body);
+  
+  const { id } = req.params;
+
+  const postUpdated = await postService.update(req.body, id);
+
+  res.status(200).json(postUpdated);
+}));
+
 module.exports = router;
