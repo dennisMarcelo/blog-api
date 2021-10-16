@@ -28,6 +28,18 @@ const create = async (post, user) => {
   }
 };
 
+const findAll = async () => {
+  const posts = await BlogPost.findAll({ 
+    include: [
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+    ],
+   });
+
+   if (!posts) throw new CustomError('Not have posts', 404);
+  return posts;
+};
+
 const findById = async (id) => {
   const post = await BlogPost.findOne({ 
     where: { id },
@@ -44,4 +56,5 @@ const findById = async (id) => {
 module.exports = {
   create,
   findById,
+  findAll,
 };
