@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const CustomError = require('../helpers/CustomError');
 
-const { BlogPost, PostsCategorie } = require('../models');
+const { BlogPost, PostsCategorie, User, Categorie } = require('../models');
 const config = require('../config/config');
 
 const sequelize = new Sequelize(config.development);
@@ -28,6 +28,20 @@ const create = async (post, user) => {
   }
 };
 
+const findById = async (id) => {
+  const post = await BlogPost.findOne({ 
+    where: { id },
+    include: [
+      { model: User, as: 'user' },
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+    ],
+   });
+
+   if (!post) throw new CustomError('Post does not exist', 404);
+  return post;
+};
+
 module.exports = {
   create,
+  findById,
 };
