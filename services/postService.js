@@ -53,8 +53,34 @@ const findById = async (id) => {
   return post;
 };
 
+const update = async (post, id, user) => {
+  const { categoryIds, title, content } = post;
+
+  if (categoryIds) throw new CustomError('Categories cannot be edited', 400);
+  const postExist = await BlogPost.findOne({ 
+    where: { id },
+    include: [
+      { model: Categorie, as: 'categories', through: { attributes: [] } },
+    ],
+   });
+
+   if (!postExist) throw new CustomError('Post does not exist', 404);
+
+   if (postExist.userId !== user.id) throw new CustomError('Unauthorized user', 401);
+
+  const postUpdated = await BlogPost.update({ title, content }, { where: { id } });
+ 
+  if (postUpdated[0] <= 0) throw new CustomError('Post does not update', 400);
+  
+  postExist.title = post.title;
+  postExist.content = post.content;
+
+  return postExist;
+};
+
 module.exports = {
   create,
   findById,
   findAll,
+  update,
 };

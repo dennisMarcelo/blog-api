@@ -34,7 +34,7 @@ router.put('/:id', validateJWT, rescue(async (req, res) => {
   
   const { id } = req.params;
 
-  const postUpdated = await postService.update(req.body, id);
+  const postUpdated = await postService.update(req.body, id, req.user);
 
   res.status(200).json(postUpdated);
 }));

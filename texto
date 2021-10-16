@@ -1,0 +1,18 @@
+attributes: { exclude: ['password', 'image'] },
+
+POST /user
+GET /user
+GET /user/:id
+DELETE /user/me
+
+POST /login
+
+POST /categories
+GET /categories
+
+POST /post
+GET /post
+GET post/:id
+PUT /post/:id
+DELETE post/:id
+GET post/search?q=:searchTerm
