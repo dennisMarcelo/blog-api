@@ -80,8 +80,7 @@ const update = async (post, id, user) => {
 
 const remove = async (id, user) => {
   const postExist = await BlogPost.findByPk(id);
-  // console.log(postExist);
-  // console.log(user);
+
   if (!postExist) throw new CustomError('Post does not exist', 404);
   if (postExist.userId !== user.id) throw new CustomError('Unauthorized user', 401);
 
