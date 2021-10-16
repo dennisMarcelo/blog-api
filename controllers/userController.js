@@ -28,4 +28,12 @@ router.get('/:id', validateJWT, rescue(async (req, res) => {
   res.status(200).json(user);
 }));
 
+router.delete('/me', validateJWT, rescue(async (req, res) => {
+    const { id } = req.user;
+
+    const userDeleted = await userService.remove(id);
+
+    res.status(204).json(userDeleted);
+}));
+
 module.exports = router;
